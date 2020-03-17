@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/axios.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <a class="title" href="">我的博客 | 技术博站</a>
+            <ul class="header_menu">
+                <li><a href="">首页</a></li>
+                <li><a href="./sitemap.html">地图</a></li>
+                <li><a href="./about.html">关于</a></li>
+                <li><a href="">留言</a></li>
+            </ul>
+            <div class="search">
+                <input type="text" placeholder="输入关键词查找">
+                <button>搜索</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="content">
+        <div class="content_left">
+            <div class="detall" id="detall">
+                <div class="detall_content">
+                    <div class="article_title">{{article_detall.title}}</div>
+                    <div class="article_message">{{article_detall.ctime}}|浏览：{{article_detall.views}}|tags:{{article_detall.tags}}</div>
+                    <div class="article_content" v-html="article_detall.content"></div>
+                </div>
+            </div>
+            <div class="blog_comments" id="blog_comments">
+                <div v-if="commentList.length < 1">当前文章还没有评论</div>
+                <div v-else class="comment_wrapper">
+                    <span>文章当前有{{commentList.length}}条留言</span>
+                    <div class="comment_list" v-for="comments in commentList">
+                        <div class="user_comment">
+                            <span>用户：{{comments.user_name}}</span><span v-if="comments.opations">{{comments.opations}}</span><span class="comment_date">发表于{{comments.ctime}}</span>
+                            <div class="comment_show">{{comments.comments}}<span class="comment_reply" @click="reply(comments.id,comments.user_name)">[回复]</span></div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="send_comment" id="send_comment">
+                <h3>发表评论</h3>
+                <input type="hidden" name="reply" id="comment_reply" value="-1">
+                <input type="hidden" name="reply" id="comment_reply_name" value="0">
+                <input type="text" name="nickname" id="comment_nickname" placeholder="用户名">
+                <input type="text" name="email" id="comment_email" placeholder="评论回复提醒邮箱">
+                <div class="comment_content"><textarea id="comment_content" name="comment_content" id="" cols="50" rows="10" placeholder="评论内容"></textarea></div>
+                <div class="comment_code">验证码:<input id="comment_code" type="text" name="code" id="code"><span @click="updataCode" v-html="svgCode"></span></div>
+                <button id="comment_submit" @click="submitTo">提交评论</button>
+            </div>
+        </div>
+        <div class="content_right">
+            <div class="right_module random_tag" id="random_tags">
+                <div>随机标签</div>
+                <a v-for="tag in tags" v-bind:href="tag.tagLink" v-bind:style="{fontSize:randomSize(),color:randomColor()}">{{tag.tag}}</a>
+            </div>
+            <div class="right_module hot_article" id="hot_article">
+                <div>最近热门</div>
+                <a v-for="article in articleList" v-bind:href="article.link">{{article.title}}</a>
+            </div>
+            <div class="right_module comment" id="new_comment">
+                <div>最新评论</div>
+                <ul>
+                    <li v-for="comment in commentList">
+                        <div>
+                            <span class="comment_user">{{comment.name}}</span>
+                            <span class="comment_time">{{comment.date}}</span>
+                        </div>
+                        <div class="comment_content">{{comment.comment}}</div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="right_module friend_link">
+                <div>友情链接</div>
+                <a href="">abd</a>
+                <a href="">abd</a>
+                <a href="">abd</a>
+                <a href="">abd</a>
+                <a href="">abd</a>
+                <a href="">abd</a>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+    <script src="./js/base.js"></script>
+    <script src="./js/article_detall.js"></script>
+</body>
+
+</html>
